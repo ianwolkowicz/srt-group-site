@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://srt-group-site.vercel.app/sitemap.xml
