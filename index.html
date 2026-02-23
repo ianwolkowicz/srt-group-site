@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Group, Inc. — National Industrial Demolition Contractor</title>
+    <meta name="description" content="SRT Group, Inc. provides industrial demolition, equipment disassembly, scrap metal recycling, and decommissioning services nationwide. 40+ years of experience. We buy your old equipment for cash.">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #111113;
+            --bg-card: #1a1a1f;
+            --bg-card-hover: #222228;
+            --bg-surface: #16161a;
+            --accent: #e8871e;
+            --accent-light: #f5a623;
+            --accent-glow: rgba(232, 135, 30, 0.15);
+            --text-primary: #eaeaea;
+            --text-secondary: #9a9aaa;
+            --text-muted: #66667a;
+            --border: #2a2a33;
+            --white: #ffffff;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+            --max-width: 1200px;
+            --radius: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        a:hover {
+            color: var(--accent-light);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ===== UTILITY ===== */
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 4px 20px rgba(232, 135, 30, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            color: var(--white);
+            box-shadow: 0 6px 30px rgba(232, 135, 30, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            transition: all var(--transition);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(17, 17, 19, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 76px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.8rem;
+            margin-left: -4px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 8px 16px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: 6px;
+            transition: all var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-cta {
+            margin-left: 8px;
+        }
+
+        .nav-cta .btn {
+            padding: 10px 24px;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 76px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 50%, rgba(232, 135, 30, 0.08), transparent),
+                radial-gradient(ellipse 60% 80% at 80% 20%, rgba(232, 135, 30, 0.04), transparent);
+            pointer-events: none;
+        }
+
+        .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 750px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 8px;
+            background: rgba(232, 135, 30, 0.1);
+            border: 1px solid rgba(232, 135, 30, 0.2);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--accent-light);
+            margin-bottom: 28px;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.6rem, 6vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -1.5px;
+            color: var(--white);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .accent {
+            color: var(--accent);
+        }
+
+        .hero-text {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 72px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .hero-stat {
+            text-align: left;
+        }
+
+        .hero-stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -1px;
+        }
+
+        .hero-stat-value .accent {
+            color: var(--accent);
+        }
+
+        .hero-stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* ===== ABOUT ===== */
+        #about {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .about-feature {
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all var(--transition);
+        }
+
+        .about-feature:hover {
+            border-color: rgba(232, 135, 30, 0.3);
+            background: var(--bg-card-hover);
+        }
+
+        .about-feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .about-feature h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .about-feature p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .about-right {
+            position: relative;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        }
+
+        .about-card blockquote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .about-card-founder {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .founder-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--white);
+        }
+
+        .founder-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--white);
+        }
+
+        .founder-title {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== SERVICES ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        .service-card {
+            padding: 36px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform var(--transition);
+        }
+
+        .service-card:hover {
+            border-color: rgba(232, 135, 30, 0.25);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .service-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== BUY EQUIPMENT (CTA) ===== */
+        .cta-buy {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-buy::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(232, 135, 30, 0.06), transparent);
+            pointer-events: none;
+        }
+
+        .cta-buy-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-buy-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: rgba(232, 135, 30, 0.1);
+            border: 2px solid rgba(232, 135, 30, 0.2);
+            border-radius: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 32px;
+        }
+
+        .cta-buy h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .cta-buy h2 .accent {
+            color: var(--accent);
+        }
+
+        .cta-buy-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 16px;
+            line-height: 1.7;
+        }
+
+        .cta-buy-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+            list-style: none;
+            margin: 32px 0 40px;
+        }
+
+        .cta-buy-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-buy-list li::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: rgba(232, 135, 30, 0.15);
+            color: var(--accent);
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===== CLIENTS ===== */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-top: 56px;
+        }
+
+        .client-card {
+            padding: 20px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            transition: all var(--transition);
+        }
+
+        .client-card:hover {
+            color: var(--text-primary);
+            border-color: rgba(232, 135, 30, 0.2);
+            background: var(--bg-card-hover);
+        }
+
+        /* ===== CONTACT ===== */
+        #contact {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 56px;
+        }
+
+        .contact-info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all var(--transition);
+        }
+
+        .contact-info-card:hover {
+            border-color: rgba(232, 135, 30, 0.25);
+        }
+
+        .contact-info-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(232, 135, 30, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info-card h4 {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .contact-info-card p,
+        .contact-info-card a {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            transition: all var(--transition);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(232, 135, 30, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2366667a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .form-group select option {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .contact-form .btn {
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 0;
+            background: var(--bg-dark);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--white);
+            font-size: 1rem;
+        }
+
+        .footer-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .clients-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 72px 0;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--bg-card);
+                border-left: 1px solid var(--border);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 100px 32px 32px;
+                gap: 4px;
+                transition: right var(--transition);
+            }
+
+            .nav-links.open {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+                padding: 12px 16px;
+                width: 100%;
+            }
+
+            .nav-cta {
+                margin-left: 0;
+                margin-top: 16px;
+                width: 100%;
+            }
+
+            .nav-cta .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.2rem, 7vw, 3.2rem);
+            }
+
+            .hero-stats {
+                gap: 32px;
+                flex-wrap: wrap;
+            }
+
+            .hero-stat-value {
+                font-size: 1.8rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .clients-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                justify-content: center;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-left {
+                flex-direction: column;
+            }
+
+            .footer-divider {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .clients-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .cta-buy-list {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Mobile nav overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">SRT</div>
+                SRT Group <span>Inc.</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#equipment">We Buy Equipment</a></li>
+                <li><a href="#clients">Clients</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="nav-cta"><a href="tel:9014137599" class="btn btn-primary">901-413-7599</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-grid-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    Nationwide Industrial Demolition
+                </div>
+                <h1>Industrial Demolition.<br><span class="accent">Done Right.</span></h1>
+                <p class="hero-text">
+                    SRT Group deploys expert crews coast to coast for industrial demolition,
+                    equipment disassembly, and scrap recycling. 40+ years of experience.
+                    Certified, insured, and ready to mobilize in days.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Get a Free Quote &#8594;</a>
+                    <a href="#equipment" class="btn btn-outline">We Buy Equipment &#8594;</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">40<span class="accent">+</span></div>
+                        <div class="hero-stat-label">Years Experience</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">40<span class="accent">+</span></div>
+                        <div class="hero-stat-label">Crew Members</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">50<span class="accent">+</span></div>
+                        <div class="hero-stat-label">States Served</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="fade-in-left">
+                    <span class="section-label">Why SRT Group</span>
+                    <h2 class="section-title">Built on 40+ Years of<br>Industrial Expertise</h2>
+                    <p class="section-subtitle">
+                        Founded by Stanley R. Thorne over four decades ago, SRT Group has grown from a
+                        local operation into a nationally recognized industrial demolition contractor.
+                        Based just outside Memphis, TN, we deploy skilled crews of up to 40 professionals
+                        anywhere in the country — often within days of your call.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon">&#9878;</div>
+                            <h4>Certified &amp; Insured</h4>
+                            <p>Full insurance coverage and industry certifications for every project.</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">&#9889;</div>
+                            <h4>Rapid Deployment</h4>
+                            <p>Crews mobilized and on-site within days, anywhere in the nation.</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">&#128295;</div>
+                            <h4>Skilled Tradespeople</h4>
+                            <p>Master millwrights, riggers, and certified welders on every crew.</p>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon">&#127919;</div>
+                            <h4>Disaster Response</h4>
+                            <p>Fast emergency response for industrial disasters and urgent teardowns.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-right fade-in-right">
+                    <div class="about-card">
+                        <blockquote>
+                            "We don't just tear things down — we do it safely, efficiently, and we put money
+                            back in your pocket by buying the equipment and scrap we remove."
+                        </blockquote>
+                        <div class="about-card-founder">
+                            <div class="founder-avatar">ST</div>
+                            <div>
+                                <div class="founder-name">Stanley R. Thorne</div>
+                                <div class="founder-title">Founder, SRT Group, Inc.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="fade-in" style="text-align: center; margin-bottom: 0;">
+                <span class="section-label">Our Services</span>
+                <h2 class="section-title">Full-Spectrum Industrial<br>Demolition Services</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">
+                    From factory teardowns to scrap recycling, we handle every phase of
+                    industrial demolition and equipment removal.
+                </p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#127981;</span>
+                    <h3>Factory Equipment Demolition &amp; Disassembly</h3>
+                    <p>Complete teardown and removal of factory equipment, production lines, and industrial machinery of all types and sizes.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#9881;</span>
+                    <h3>Conveyor System Demolition &amp; Disassembly</h3>
+                    <p>Expert disassembly of conveyor systems from all major manufacturers. We install and disassemble most systems in use today.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#128230;</span>
+                    <h3>Pallet Racking Demolition &amp; Disassembly</h3>
+                    <p>Safe, efficient removal of pallet racking systems. We handle all major racking systems currently in use nationwide.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#9851;</span>
+                    <h3>Scrap Metal Salvage &amp; Recycling</h3>
+                    <p>Comprehensive scrap metal recovery and recycling. We maximize the value of every material removed from your site.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#128690;</span>
+                    <h3>Equipment Salvage &amp; Removal</h3>
+                    <p>Professional salvage and removal of industrial equipment. We buy your equipment for cash and handle all logistics.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#128259;</span>
+                    <h3>Material Handling Systems Purchase &amp; Recycling</h3>
+                    <p>We purchase used material handling systems for cash, then professionally disassemble, remove, and recycle them.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#9889;</span>
+                    <h3>Large Transformer Purchase, Disassembly &amp; Demo</h3>
+                    <p>Specialized purchase, disassembly, and demolition of large industrial transformers with full environmental compliance.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#127959;</span>
+                    <h3>Decommissioning &amp; Interior Demolition</h3>
+                    <p>Complete facility decommissioning and interior demolition services. We strip facilities to the shell, ready for reuse.</p>
+                </div>
+                <div class="service-card scale-in">
+                    <span class="service-icon">&#128167;</span>
+                    <h3>Industrial Tank Removal</h3>
+                    <p>Removal of large propane, liquid gas, and butane tanks (20,000+ gallons). Certified crews with specialized equipment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUY EQUIPMENT CTA -->
+    <section class="section cta-buy" id="equipment">
+        <div class="container">
+            <div class="cta-buy-inner fade-in">
+                <div class="cta-buy-icon">&#128176;</div>
+                <h2>We <span class="accent">Buy</span> Your Old Equipment<br>For Cash</h2>
+                <p class="cta-buy-text">
+                    Unlike most demolition contractors, SRT Group pays you for the equipment and
+                    scrap we remove. Turn your decommissioned assets into immediate revenue.
+                </p>
+                <p class="cta-buy-text" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 0;">
+                    We purchase, disassemble, and remove conveyor systems, racking, transformers,
+                    material handling equipment, and more.
+                </p>
+                <ul class="cta-buy-list">
+                    <li>Conveyor systems</li>
+                    <li>Pallet racking</li>
+                    <li>Factory equipment</li>
+                    <li>Material handling systems</li>
+                    <li>Large transformers</li>
+                    <li>Scrap metal</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Get a Cash Offer &#8594;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS -->
+    <section class="section" id="clients">
+        <div class="container">
+            <div class="fade-in" style="text-align: center;">
+                <span class="section-label">Trusted By Industry Leaders</span>
+                <h2 class="section-title">Proven Track Record With<br>Major Corporations</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">
+                    From Fortune 500 companies to government agencies, SRT Group has earned the
+                    trust of the nation's most demanding organizations.
+                </p>
+            </div>
+            <div class="clients-grid">
+                <div class="client-card scale-in">Arrow Electronics</div>
+                <div class="client-card scale-in">Brentwood</div>
+                <div class="client-card scale-in">Chromcraft</div>
+                <div class="client-card scale-in">Coca-Cola</div>
+                <div class="client-card scale-in">DHL</div>
+                <div class="client-card scale-in">Exxon</div>
+                <div class="client-card scale-in">FedEx Ground</div>
+                <div class="client-card scale-in">General Dynamics</div>
+                <div class="client-card scale-in">Gildan</div>
+                <div class="client-card scale-in">Hewlett Packard</div>
+                <div class="client-card scale-in">IBM</div>
+                <div class="client-card scale-in">Jabil</div>
+                <div class="client-card scale-in">Lakeland Airport</div>
+                <div class="client-card scale-in">Nike</div>
+                <div class="client-card scale-in">Quaker Oats</div>
+                <div class="client-card scale-in">US Government</div>
+                <div class="client-card scale-in">UPS</div>
+                <div class="client-card scale-in">Vanderburg Foods</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="fade-in" style="text-align: center;">
+                <span class="section-label">Get In Touch</span>
+                <h2 class="section-title">Ready to Start Your Project?</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">
+                    Contact us for a free estimate. We respond quickly and can have crews on-site within days.
+                </p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info-cards fade-in-left">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#128222;</div>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:9014137599">901-413-7599</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#9993;</div>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:srtgroup@srtgroup.biz">srtgroup@srtgroup.biz</a>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#128205;</div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>1535 Nottingham Drive<br>Southaven, MS 38671</p>
+                            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Just outside Memphis, TN</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">&#128337;</div>
+                        <div>
+                            <h4>Business Hours</h4>
+                            <p>Monday &ndash; Friday: 8:00 AM &ndash; 5:00 PM</p>
+                            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">24/7 emergency response available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in-right">
+                    <form class="contact-form" onsubmit="handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="John Smith" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" id="company" name="company" placeholder="Company name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="john@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Needed</label>
+                            <select id="service" name="service">
+                                <option value="" disabled selected>Select a service</option>
+                                <option value="factory-demo">Factory Equipment Demolition</option>
+                                <option value="conveyor">Conveyor System Demolition</option>
+                                <option value="racking">Pallet Racking Demolition</option>
+                                <option value="scrap">Scrap Metal Salvage & Recycling</option>
+                                <option value="equipment-salvage">Equipment Salvage & Removal</option>
+                                <option value="material-handling">Material Handling Systems</option>
+                                <option value="transformer">Large Transformer Demo</option>
+                                <option value="decommission">Decommissioning & Interior Demo</option>
+                                <option value="tank">Industrial Tank Removal</option>
+                                <option value="sell-equipment">Sell Equipment to SRT</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your project — location, scope, timeline, equipment type, etc." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message &#8594;</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <div class="footer-logo">
+                        <div class="logo-icon">SRT</div>
+                        SRT Group, Inc.
+                    </div>
+                    <div class="footer-divider"></div>
+                    <span class="footer-copy">&copy; 2026 SRT Group, Inc. All rights reserved.</span>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#equipment">We Buy Equipment</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // Mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
+
+        function closeMenu() {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('open');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.contains('open');
+            if (isOpen) {
+                closeMenu();
+            } else {
+                menuToggle.classList.add('active');
+                navLinks.classList.add('open');
+                navOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        navOverlay.addEventListener('click', closeMenu);
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay for grid children
+                    const parent = entry.target.parentElement;
+                    if (parent && (parent.classList.contains('services-grid') ||
+                        parent.classList.contains('clients-grid'))) {
+                        const siblings = Array.from(parent.children);
+                        const i = siblings.indexOf(entry.target);
+                        entry.target.style.transitionDelay = `${i * 0.06}s`;
+                    }
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Simple form handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Message Sent &#10003;';
+            btn.style.background = '#22c55e';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+                btn.disabled = false;
+                e.target.reset();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
